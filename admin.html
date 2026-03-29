@@ -54,6 +54,23 @@
 
     <button class="btn-green" onclick="saveToDatabase()"><i class="ph ph-cloud-arrow-up"></i> SIMPAN & PUBLIKASIKAN PERUBAHAN</button>
 
+    <!-- SETTING INFO RESTORAN -->
+    <div class="add-card" style="border: 2px solid #2B6CB0; background: #EBF8FF; margin-top: 1rem;">
+        <h2 style="font-size: 1.1rem; color: #2B6CB0; margin-bottom: 1rem;"><i class="ph ph-storefront"></i> Pengaturan Toko (Info WA & Jam Buka)</h2>
+        <div class="flex-row">
+            <div>
+                <label>Nama Restoran</label>
+                <input type="text" id="info-name">
+            </div>
+            <div>
+                <label>Jam Operasional</label>
+                <input type="text" id="info-hours">
+            </div>
+        </div>
+        <label>Nomor WhatsApp (Contoh: 6285101191675)</label>
+        <input type="text" id="info-wa" placeholder="Gunakan format 62 tanpa + atau 0">
+    </div>
+
     <!-- FORM TAMBAH MENU BARU -->
     <div class="add-card">
         <h2 style="font-size: 1.2rem;"><i class="ph ph-plus-circle"></i> Tambah Menu Baru</h2>
@@ -115,6 +132,12 @@
         db.ref('restaurant_menu').on('value', (snapshot) => {
             if (snapshot.exists()) {
                 menuData = snapshot.val();
+                
+                // Isi field info restoran
+                document.getElementById('info-name').value = menuData.restaurantInfo.name;
+                document.getElementById('info-hours').value = menuData.restaurantInfo.openHours;
+                document.getElementById('info-wa').value = menuData.restaurantInfo.whatsapp;
+
                 renderVisualEditor();
                 hideLoading();
             } else {
@@ -247,6 +270,11 @@
     function saveToDatabase() {
         if(!menuData) return;
         
+        // Update restaurant info dari input sebelum simpan
+        menuData.restaurantInfo.name = document.getElementById('info-name').value;
+        menuData.restaurantInfo.openHours = document.getElementById('info-hours').value;
+        menuData.restaurantInfo.whatsapp = document.getElementById('info-wa').value;
+
         showLoading('Menyimpan ke Cloud...');
 
         // SIMPAN KE FIREBASE

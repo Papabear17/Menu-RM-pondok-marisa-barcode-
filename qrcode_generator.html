@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #F8F9FB;
+            background-color: #FFFDE4; /* Light Pastel Yellow */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,78 +19,93 @@
         }
         .container {
             background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             max-width: 400px;
             width: 100%;
             text-align: center;
+            border: 1px solid rgba(217, 4, 41, 0.1);
         }
-        h1 { color: #2D3748; font-size: 1.5rem; margin-bottom: 0.5rem; }
-        p { color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        h1 { color: #D90429; font-size: 1.6rem; margin-bottom: 0.5rem; font-weight: 700; }
+        p { color: #8D99AE; font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5; }
+        label { text-align: left; display: block; font-size: 0.85rem; font-weight: 700; color: #D90429; margin-bottom: 5px; }
         input {
             width: 100%;
-            padding: 0.8rem;
+            padding: 1rem;
             border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            margin-bottom: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
             font-family: 'Outfit', sans-serif;
             box-sizing: border-box;
+            font-size: 1rem;
         }
         button {
-            background: #FF5A5F;
+            background: #D90429; /* Primary Red */
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
             width: 100%;
             margin-bottom: 1.5rem;
             transition: 0.3s;
+            font-size: 1rem;
         }
-        button:hover { background: #E0484A; }
+        button:hover { background: #A4122D; transform: translateY(-2px); }
         
         #qrcode {
             display: flex;
             justify-content: center;
             margin-bottom: 1.5rem;
-            padding: 1rem;
+            padding: 1.5rem;
             background: #fff;
-            border: 1px dashed #E2E8F0;
-            border-radius: 8px;
+            border: 2px dashed #D90429;
+            border-radius: 12px;
             min-height: 200px;
             align-items: center;
         }
         #qrcode img {
             max-width: 100%;
+            border-radius: 8px;
         }
         .btn-download {
-            background: #2D3748;
+            background: #2D6A4F; /* Accent Green */
             display: none;
             text-decoration: none;
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            width: 100%;
+            box-sizing: border-box;
+            transition: 0.3s;
         }
-        .btn-download:hover { background: #1A202C; }
+        .btn-download:hover { background: #1B4332; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Cetak QR Code Meja</h1>
-    <p>Masukkan link menu website Anda (misal link GitHub Pages) untuk membuat QR Code yang bisa di-scan pelanggan.</p>
+    <h1>Cetak Barcode Branding</h1>
+    <p>Ubah nama di tengah barcode tanpa mengganggu scan menu Anda agar lebih profesional!</p>
     
-    <input type="url" id="urlInput" placeholder="https://syafiq.github.io/RM-Pondok-Marisa" required>
-    <button onclick="generateQR()">Buat QR Code</button>
+    <div style="text-align: left; margin-bottom: 1.2rem;">
+        <label>Link Menu Digital (GitHub Pages)</label>
+        <input type="url" id="urlInput" value="https://papabear17.github.io/Menu-RM-pondok-ma" placeholder="https://..." required>
+        
+        <label>Nama di Tengah Barcode (Contoh: RM)</label>
+        <input type="text" id="logoText" placeholder="Maks 4 Huruf..." maxlength="5">
+    </div>
+    
+    <button onclick="generateQR()">Buat Barcode Branding</button>
 
     <div id="qrcode">
-        <span style="color: #A0AEC0; font-size: 0.9rem;">Preview QR Code...</span>
+        <span style="color: #A0AEC0; font-size: 0.9rem;">Preview Barcode...</span>
     </div>
 
-    <a id="downloadBtn" class="btn-download" download="menu-qr-code.png">Unduh (Download) Gambar QR</a>
+    <a id="downloadBtn" class="btn-download" download="menu-qr-branding.png">Unduh (Download) Hasil Barcode</a>
 </div>
 
 <script>
@@ -98,6 +113,7 @@
 
     function generateQR() {
         const url = document.getElementById("urlInput").value;
+        const logoText = document.getElementById("logoText").value;
         const qrcodeContainer = document.getElementById("qrcode");
         const downloadBtn = document.getElementById("downloadBtn");
 
@@ -109,31 +125,45 @@
         // Hapus qr lama
         qrcodeContainer.innerHTML = "";
 
-        // Buat baru
+        // Buat baru (Resolusi besar 500x500 agar jernih saat di-print)
         qrcode = new QRCode(qrcodeContainer, {
             text: url,
-            width: 200,
-            height: 200,
+            width: 500,
+            height: 500,
             colorDark : "#000000",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.H
         });
 
-        // Tampilkan tombol download setelah delay (karena library me-render gambar sedikit terlambat)
+        // Tunggu proses render library selesai
         setTimeout(() => {
-            const img = qrcodeContainer.querySelector("img");
-            if (img && img.src) {
-                downloadBtn.href = img.src;
-                downloadBtn.style.display = "inline-block";
-            } else {
-                // Fallback untuk canvas
-                const canvas = qrcodeContainer.querySelector("canvas");
-                if (canvas) {
-                    downloadBtn.href = canvas.toDataURL("image/png");
-                    downloadBtn.style.display = "inline-block";
+            const canvas = qrcodeContainer.querySelector("canvas");
+            if (canvas) {
+                const ctx = canvas.getContext("2d");
+                const size = canvas.width;
+                const center = size / 2;
+
+                // BRANDING: Tambah kotak putih dan teks di tengah
+                if (logoText) {
+                    const logoBox = size * 0.22; // Ukuran kotak tengah
+                    
+                    // Box putih di tengah
+                    ctx.fillStyle = "white";
+                    ctx.fillRect(center - logoBox/2, center - logoBox/2, logoBox, logoBox);
+                    
+                    // Teks Merah (Branding)
+                    ctx.fillStyle = "#D90429";
+                    ctx.font = "900 " + (logoBox * 0.45) + "px Outfit";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(logoText.toUpperCase(), center, center);
                 }
+
+                // Siapkan link download dari canvas yang sudah dimodifikasi
+                downloadBtn.href = canvas.toDataURL("image/png");
+                downloadBtn.style.display = "inline-block";
             }
-        }, 500);
+        }, 800);
     }
 </script>
 
