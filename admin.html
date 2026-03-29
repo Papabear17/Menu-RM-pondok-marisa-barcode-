@@ -52,6 +52,8 @@
 
     <div id="success-alert" class="success-msg"></div>
 
+    <button class="btn-green" onclick="saveToDatabase()"><i class="ph ph-cloud-arrow-up"></i> SIMPAN & PUBLIKASIKAN PERUBAHAN</button>
+
     <!-- FORM TAMBAH MENU BARU -->
     <div class="add-card">
         <h2 style="font-size: 1.2rem;"><i class="ph ph-plus-circle"></i> Tambah Menu Baru</h2>
@@ -82,12 +84,10 @@
     <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0;">
 
     <div id="tab-editor">
-        <h2 style="font-size: 1.2rem;">Daftar Menu Saat Ini</h2>
-        <p style="font-size: 0.8rem; color: #718096; margin-bottom: 1.5rem;">Klik Simpan di bawah HP untuk memperbarui semua perubahan.</p>
+        <h2 style="font-size: 1.1rem; color: #D90429;">Daftar Menu Saat Ini</h2>
+        <p style="font-size: 0.85rem; color: #8D99AE; margin-bottom: 1.5rem;">Perubahan di bawah hanya akan disimpan setelah Anda menekan tombol <b>SIMPAN</b> di bagian paling atas.</p>
         
         <div id="items-container"></div>
-        
-        <button class="btn-green" id="main-save-btn" onclick="saveToDatabase()"><i class="ph ph-cloud-arrow-up"></i> SIMPAN & PUBLIKASIKAN PERUBAHAN</button>
     </div>
 </div>
 
