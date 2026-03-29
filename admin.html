@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - RM Pondok Marisa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #F8F9FB; color: #2D3748; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h1, h2 { color: #FF5A5F; margin-top: 0; }
+        label { font-weight: 600; display: block; margin-top: 1rem; margin-bottom: 0.3rem;}
+        input[type="text"], input[type="number"] { width: 100%; padding: 0.8rem; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Outfit'; box-sizing: border-box; }
+        button { border: none; padding: 1rem; border-radius: 8px; width: 100%; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 1rem; font-family: 'Outfit'; }
+        .btn-green { background-color: #2F855A; color: white; }
+        .btn-green:hover { background-color: #276749; }
+        .item-card { border: 1px solid #E2E8F0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; position: relative; }
+        .flex-row { display: flex; gap: 1rem; justify-content: space-between; margin-bottom: 0.5rem;}
+        .flex-row > div { flex: 1; }
+        .success-msg { background: #C6F6D5; color: #22543D; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; line-height: 1.5; }
+        .status-badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 20px; background: #EBF8FF; color: #2B6CB0; font-weight: 600; font-size: 0.8rem; margin-bottom: 1rem;}
+        
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; color: #FF5A5F;}
+    </style>
+</head>
+<body>
+
+<div id="loading-overlay">Menghubungkan ke Database...</div>
+
+<div class="container">
+    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h1>Admin Menu</h1>
+        <a href="index.html" style="color: #718096; text-decoration: none;"><i class="ph ph-arrow-left"></i> Kembali</a>
+    </div>
+
+    <div class="status-badge"><i class="ph-fill ph-check-circle"></i> Terhubung dengan Cloud Database</div>
+
+    <div id="success-alert" class="success-msg"></div>
+
+    <div id="tab-editor">
+        <p style="font-size: 0.9rem; color: #718096;">Setiap Anda menekan tombol Simpan, harga akan <b>langsung memperbarui semua HP pelanggan</b> yang sedang melihat menu saat ini juga!</p>
+        
+        <div id="items-container"></div>
+        
+        <button class="btn-green" onclick="saveToDatabase()"><i class="ph ph-cloud-arrow-up"></i> SIMPAN & PUBLIKASIKAN KE SEMUA PELANGGAN</button>
+    </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+    let menuData = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Ambil data dari Firebase
+        db.ref('restaurant_menu').once('value').then(async (snapshot) => {
+            if (snapshot.exists()) {
+                menuData = snapshot.val();
+                renderVisualEditor();
+                document.getElementById('loading-overlay').style.display = 'none';
+            } else {
+                // Jika kosong, fetch menu.json default
+                try {
+                    const response = await fetch('menu.json');
+                    menuData = await response.json();
+                    renderVisualEditor();
+                    document.getElementById('loading-overlay').style.display = 'none';
+                } catch(e) {
+                    document.getElementById('loading-overlay').innerText = 'Gagal memuat sistem.';
+                }
+            }
+        });
+    });
+
+    function renderVisualEditor() {
+        const container = document.getElementById("items-container");
+        container.innerHTML = "";
+
+        if(!menuData || !menuData.items) return;
+
+        menuData.items.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "item-card";
+            
+            card.innerHTML = `
+                <div style="font-weight: 600; font-size: 1.1rem; color: #E0484A; margin-bottom: 0.5rem;">${item.name}</div>
+                <div class="flex-row">
+                    <div>
+                        <label>Nama Menu</label>
+                        <input type="text" id="itemName_${index}" value="${item.name}">
+                    </div>
+                    <div>
+                        <label>Harga (Rp)</label>
+                        <input type="number" id="itemPrice_${index}" value="${item.price}">
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function saveToDatabase() {
+        if(!menuData) return;
+        
+        document.getElementById('loading-overlay').style.display = 'flex';
+        document.getElementById('loading-overlay').innerText = 'Menyimpan...';
+
+        // Update data object
+        menuData.items.forEach((item, index) => {
+            item.name = document.getElementById(`itemName_${index}`).value;
+            item.price = parseInt(document.getElementById(`itemPrice_${index}`).value) || 0;
+        });
+
+        // SIMPAN KE FIREBASE
+        db.ref('restaurant_menu').set(menuData)
+            .then(() => {
+                document.getElementById('loading-overlay').style.display = 'none';
+                const succ = document.getElementById("success-alert");
+                succ.innerHTML = "<b>&#10004; Sukses Memublikasikan!</b> Harga terbaru kini sudah live di internet.";
+                succ.style.display = "block";
+                window.scrollTo(0, 0);
+                setTimeout(() => { succ.style.display = "none"; }, 5000);
+            })
+            .catch(error => {
+                document.getElementById('loading-overlay').innerText = 'GAGAL: Izin ditolak. Anda belum mengatur Realtime Database Rules ke "true".';
+                console.error(error);
+                setTimeout(() => { document.getElementById('loading-overlay').style.display = 'none'; }, 4000);
+            });
+    }
+</script>
+
+</body>
+</html>

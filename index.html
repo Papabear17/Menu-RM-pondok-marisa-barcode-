@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM. Pondok Marisa - Digital Menu</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Phosphor Icons (Sleek modern icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="glass-header">
+        <div class="header-content">
+            <h1 id="brand-name">RM. Pondok Marisa</h1>
+            <p id="brand-tagline">Cita Rasa Nusantara yang Menggugah Selera</p>
+        </div>
+        <div class="header-bg"></div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        
+        <!-- Info Alert -->
+        <div class="info-alert">
+            <i class="ph ph-clock"></i>
+            <span id="open-hours">Memuat jam buka...</span>
+        </div>
+
+        <!-- Sticky Category Navigation -->
+        <div class="category-nav-wrapper">
+            <nav id="category-nav" class="category-nav">
+                <!-- Categories will be injected here by JS -->
+                <button class="cat-btn active" data-filter="all">
+                    <span>🔥</span> Semua
+                </button>
+            </nav>
+        </div>
+
+        <!-- Menu Grid -->
+        <section id="menu-container" class="menu-grid">
+            <!-- Loading State -->
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <p>Menyiapkan menu terbaik untuk Anda...</p>
+            </div>
+            <!-- Menu items will be injected here by JS -->
+        </section>
+
+    </main>
+
+    <!-- Order Button Sticky Bottom -->
+    <div class="bottom-action">
+        <a href="#" id="wa-link" target="_blank" class="btn-primary">
+            <i class="ph ph-whatsapp-logo"></i>
+            Pesan via WhatsApp
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Firebase core SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
