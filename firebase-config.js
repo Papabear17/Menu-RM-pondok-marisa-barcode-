@@ -1,6 +1,4 @@
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-// We are using the Compat format specifically for static scripts to be easiest
-
+// Firebase Configuration - RM. Pondok Marisa
 const firebaseConfig = {
     apiKey: "AIzaSyCPc7vU7_s-DE1jJVbqQ3uAzNbcLHwvs5I",
     authDomain: "menu-rm-pondok-marisa.firebaseapp.com",
@@ -9,10 +7,9 @@ const firebaseConfig = {
     messagingSenderId: "251373330445",
     appId: "1:251373330445:web:caf7dd7a9e5b5cb134b544",
     measurementId: "G-CVNWYNE9RW",
-    databaseURL: "https://menu-rm-pondok-marisa-default-rtdb.firebaseio.com" // Usually needed for Realtime DB
+    databaseURL: "https://menu-rm-pondok-marisa-default-rtdb.firebaseio.com"
 };
 
-// Initialize Firebase
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }

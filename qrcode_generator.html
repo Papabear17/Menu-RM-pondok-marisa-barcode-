@@ -3,169 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator - RM. Pondok Marisa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Generator QR Code – RM. Pondok Marisa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #FFFDE4; /* Light Pastel Yellow */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
+        :root { --primary:#D90429; --green:#2D6A4F; --bg:#FFFAE0; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Outfit',sans-serif; background:var(--bg); min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:2rem 1rem 3rem; }
+
+        .back-link { align-self:flex-start; display:flex; align-items:center; gap:6px; color:#718096; text-decoration:none; font-size:.88rem; font-weight:600; margin-bottom:1.5rem; transition:color .2s; }
+        .back-link:hover { color:var(--primary); }
+
+        .card {
+            background:white; border-radius:24px; padding:2.5rem 2rem;
+            box-shadow:0 15px 40px rgba(0,0,0,.08); max-width:440px; width:100%;
+            border:1px solid rgba(217,4,41,.08);
         }
-        .container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid rgba(217, 4, 41, 0.1);
+        .card-header { text-align:center; margin-bottom:2rem; }
+        .card-header .icon { font-size:2.5rem; display:block; margin-bottom:.5rem; }
+        .card-header h1 { font-size:1.5rem; font-weight:900; color:var(--primary); margin-bottom:.3rem; }
+        .card-header p { font-size:.85rem; color:#718096; line-height:1.5; }
+
+        label { display:block; font-size:.8rem; font-weight:800; color:var(--primary); margin-bottom:5px; text-transform:uppercase; letter-spacing:.5px; }
+        .form-group { margin-bottom:1.1rem; }
+        input[type="url"], input[type="text"] {
+            width:100%; padding:.9rem 1.1rem; border:1.5px solid #E8E8E8;
+            border-radius:12px; font-family:'Outfit'; font-size:.95rem;
+            background:#FAFAFA; transition:all .2s; color:#1A202C;
         }
-        h1 { color: #D90429; font-size: 1.6rem; margin-bottom: 0.5rem; font-weight: 700; }
-        p { color: #8D99AE; font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5; }
-        label { text-align: left; display: block; font-size: 0.85rem; font-weight: 700; color: #D90429; margin-bottom: 5px; }
-        input {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #E2E8F0;
-            border-radius: 10px;
-            margin-bottom: 0.8rem;
-            font-family: 'Outfit', sans-serif;
-            box-sizing: border-box;
-            font-size: 1rem;
+        input:focus { outline:none; border-color:var(--primary); background:white; box-shadow:0 0 0 3px rgba(217,4,41,.08); }
+
+        .btn-generate {
+            width:100%; background:var(--primary); color:white; border:none;
+            padding:1.1rem; border-radius:14px; font-size:1rem; font-weight:800;
+            cursor:pointer; font-family:'Outfit'; transition:all .25s;
+            display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:1.5rem;
         }
-        button {
-            background: #D90429; /* Primary Red */
-            color: white;
-            border: none;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            width: 100%;
-            margin-bottom: 1.5rem;
-            transition: 0.3s;
-            font-size: 1rem;
+        .btn-generate:hover { background:#B90422; transform:translateY(-2px); box-shadow:0 8px 20px rgba(217,4,41,.3); }
+
+        #qr-preview {
+            display:flex; justify-content:center; align-items:center;
+            min-height:220px; border:2px dashed rgba(217,4,41,.3);
+            border-radius:16px; background:#FFF5F5; margin-bottom:1.5rem;
+            position:relative; overflow:hidden;
         }
-        button:hover { background: #A4122D; transform: translateY(-2px); }
-        
-        #qrcode {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: #fff;
-            border: 2px dashed #D90429;
-            border-radius: 12px;
-            min-height: 200px;
-            align-items: center;
-        }
-        #qrcode img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
+        #qr-preview canvas { border-radius:8px; max-width:100%; }
+        .qr-placeholder { color:#A0AEC0; font-size:.88rem; text-align:center; padding:1rem; }
+
         .btn-download {
-            background: #2D6A4F; /* Accent Green */
-            display: none;
-            text-decoration: none;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 700;
-            width: 100%;
-            box-sizing: border-box;
-            transition: 0.3s;
+            display:none; width:100%; background:var(--green); color:white;
+            border:none; padding:1rem; border-radius:14px; font-size:.95rem;
+            font-weight:800; cursor:pointer; font-family:'Outfit';
+            text-decoration:none; text-align:center; transition:all .25s;
+            align-items:center; justify-content:center; gap:8px;
         }
-        .btn-download:hover { background: #1B4332; }
+        .btn-download:hover { background:#1B4332; }
+
+        .tips { background:#F0FFF4; border:1px solid #C6F6D5; border-radius:12px; padding:1rem 1.2rem; margin-top:1.5rem; }
+        .tips p { font-size:.8rem; color:#276749; font-weight:600; line-height:1.6; }
+        .tips p + p { margin-top:.3rem; }
     </style>
+
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-<div class="container">
-    <h1>Cetak Barcode Branding</h1>
-    <p>Ubah nama di tengah barcode tanpa mengganggu scan menu Anda agar lebih profesional!</p>
-    
-    <div style="text-align: left; margin-bottom: 1.2rem;">
-        <label>Link Menu Digital (GitHub Pages)</label>
-        <input type="url" id="urlInput" value="https://papabear17.github.io/Menu-RM-pondok-ma" placeholder="https://..." required>
-        
-        <label>Nama di Tengah Barcode (Contoh: RM)</label>
-        <input type="text" id="logoText" placeholder="Maks 4 Huruf..." maxlength="5">
-    </div>
-    
-    <button onclick="generateQR()">Buat Barcode Branding</button>
+<a href="../ADMIN/barcode.html" class="back-link"><i class="ph ph-arrow-left"></i> Kembali ke Hub Menu Digital</a>
 
-    <div id="qrcode">
-        <span style="color: #A0AEC0; font-size: 0.9rem;">Preview Barcode...</span>
+<div class="card">
+    <div class="card-header">
+        <span class="icon">📱</span>
+        <h1>Generator QR Code</h1>
+        <p>Buat QR Code berbranding untuk meja restoran agar pelanggan bisa scan dan melihat menu.</p>
     </div>
 
-    <a id="downloadBtn" class="btn-download" download="menu-qr-branding.png">Unduh (Download) Hasil Barcode</a>
+    <div class="form-group">
+        <label for="urlInput">Link Menu Digital</label>
+        <input type="url" id="urlInput" placeholder="https://namadomain.com/menu-digital/index.html" value="">
+    </div>
+
+    <div class="form-group">
+        <label for="logoText">Teks di Tengah QR (maks 5 huruf)</label>
+        <input type="text" id="logoText" placeholder="Contoh: RM" maxlength="5">
+    </div>
+
+    <button class="btn-generate" onclick="generateQR()">
+        <i class="ph ph-qr-code"></i> Buat QR Code
+    </button>
+
+    <div id="qr-preview">
+        <div class="qr-placeholder">
+            <i class="ph ph-qr-code" style="font-size:2rem;display:block;margin-bottom:.5rem;opacity:.4"></i>
+            QR Code akan muncul di sini
+        </div>
+    </div>
+
+    <a id="downloadBtn" class="btn-download" download="qr-menu-rm-pondok-marisa.png">
+        <i class="ph ph-download-simple"></i> Unduh QR Code (PNG)
+    </a>
+
+    <div class="tips">
+        <p>💡 <b>Tips:</b> Print dan laminating QR Code ini, lalu tempel di setiap meja.</p>
+        <p>📏 Ukuran ideal: 8×8 cm agar mudah di-scan.</p>
+        <p>🔗 Pastikan link mengarah ke halaman menu yang bisa dibuka dari internet.</p>
+    </div>
 </div>
 
 <script>
     let qrcode = null;
 
     function generateQR() {
-        const url = document.getElementById("urlInput").value;
-        const logoText = document.getElementById("logoText").value;
-        const qrcodeContainer = document.getElementById("qrcode");
-        const downloadBtn = document.getElementById("downloadBtn");
+        const url       = document.getElementById('urlInput').value.trim();
+        const logoText  = document.getElementById('logoText').value.trim();
+        const container = document.getElementById('qr-preview');
+        const dlBtn     = document.getElementById('downloadBtn');
 
-        if (!url) {
-            alert("Harap masukkan link URL website Anda.");
-            return;
-        }
+        if (!url) { alert('Masukkan link URL menu terlebih dahulu!'); return; }
 
-        // Hapus qr lama
-        qrcodeContainer.innerHTML = "";
+        container.innerHTML = '';
+        dlBtn.style.display = 'none';
 
-        // Buat baru (Resolusi besar 500x500 agar jernih saat di-print)
-        qrcode = new QRCode(qrcodeContainer, {
-            text: url,
-            width: 500,
-            height: 500,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+        qrcode = new QRCode(container, {
+            text:         url,
+            width:        500,
+            height:       500,
+            colorDark:    "#000000",
+            colorLight:   "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
         });
 
-        // Tunggu proses render library selesai
         setTimeout(() => {
-            const canvas = qrcodeContainer.querySelector("canvas");
-            if (canvas) {
-                const ctx = canvas.getContext("2d");
-                const size = canvas.width;
-                const center = size / 2;
+            const canvas = container.querySelector('canvas');
+            if (!canvas) return;
+            const ctx    = canvas.getContext('2d');
+            const size   = canvas.width;
+            const center = size / 2;
 
-                // BRANDING: Tambah kotak putih dan teks di tengah
-                if (logoText) {
-                    const logoBox = size * 0.22; // Ukuran kotak tengah
-                    
-                    // Box putih di tengah
-                    ctx.fillStyle = "white";
-                    ctx.fillRect(center - logoBox/2, center - logoBox/2, logoBox, logoBox);
-                    
-                    // Teks Merah (Branding)
-                    ctx.fillStyle = "#D90429";
-                    ctx.font = "900 " + (logoBox * 0.45) + "px Outfit";
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText(logoText.toUpperCase(), center, center);
-                }
-
-                // Siapkan link download dari canvas yang sudah dimodifikasi
-                downloadBtn.href = canvas.toDataURL("image/png");
-                downloadBtn.style.display = "inline-block";
+            if (logoText) {
+                const boxSize = size * 0.22;
+                // Kotak putih di tengah
+                ctx.fillStyle = 'white';
+                ctx.fillRect(center - boxSize/2, center - boxSize/2, boxSize, boxSize);
+                // Teks branding merah
+                ctx.fillStyle   = '#D90429';
+                ctx.font        = `900 ${boxSize * 0.44}px Outfit, sans-serif`;
+                ctx.textAlign   = 'center';
+                ctx.textBaseline= 'middle';
+                ctx.fillText(logoText.toUpperCase(), center, center);
             }
-        }, 800);
+
+            dlBtn.href = canvas.toDataURL('image/png');
+            dlBtn.style.display = 'flex';
+        }, 900);
     }
 </script>
-
 </body>
 </html>

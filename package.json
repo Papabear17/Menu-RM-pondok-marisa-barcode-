@@ -1,0 +1,50 @@
+{
+  "name": "rm-pondok-marisa-kasir",
+  "version": "1.0.0",
+  "description": "Aplikasi Sistem Kasir R.M. Pondok Marisa",
+  "main": "main.js",
+  "author": "R.M. Pondok Marisa",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.2.0",
+    "electron": "^34.5.8",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.rmpondokmarisa.kasir",
+    "productName": "Kasir RM Pondok Marisa",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": [
+        "id-ID",
+        "en-US"
+      ],
+      "language": "1057",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "output": "build-dist"
+    }
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.2.0",
+    "@capacitor/core": "^8.2.0"
+  }
+}

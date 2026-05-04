@@ -3,12 +3,24 @@
     "name": "RM. Pondok Marisa",
     "tagline": "Cita Rasa Nusantara yang Menggugah Selera",
     "openHours": "Buka Setiap Hari: 09.00 - 22.00",
-    "whatsapp": "6285101191675"
+    "whatsapp": "6281234567890"
   },
   "categories": [
-    { "id": "makanan", "name": "Makanan", "icon": "🍲" },
-    { "id": "minuman", "name": "Minuman", "icon": "🍹" },
-    { "id": "cemilan", "name": "Cemilan", "icon": "🍟" }
+    {
+      "id": "makanan",
+      "name": "Makanan",
+      "icon": "🍲"
+    },
+    {
+      "id": "minuman",
+      "name": "Minuman",
+      "icon": "🍹"
+    },
+    {
+      "id": "cemilan",
+      "name": "Cemilan",
+      "icon": "🍟"
+    }
   ],
   "items": [
     {
