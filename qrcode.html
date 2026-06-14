@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Menu – RM. Pondok Marisa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Outfit',sans-serif;
+            background:#FFFAE0;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            padding:2rem 1rem 3rem;
+        }
+
+        .back-link {
+            align-self:flex-start;
+            display:flex;
+            align-items:center;
+            gap:6px;
+            color:#718096;
+            text-decoration:none;
+            font-size:1rem;
+            font-weight:700;
+            margin-bottom:1.5rem;
+        }
+        .back-link:hover { color:#D90429; }
+
+        .card {
+            background:white;
+            border-radius:28px;
+            padding:2.5rem 2rem;
+            box-shadow:0 15px 40px rgba(0,0,0,.10);
+            max-width:420px;
+            width:100%;
+            text-align:center;
+        }
+
+        .card h1 {
+            font-size:1.6rem;
+            font-weight:900;
+            color:#D90429;
+            margin-bottom:.4rem;
+        }
+        .card .subtitle {
+            font-size:1rem;
+            color:#718096;
+            margin-bottom:2rem;
+            font-weight:600;
+        }
+
+        /* Loading state */
+        #loading-state {
+            padding:3rem 1rem;
+            color:#94a3b8;
+        }
+        #loading-state .spinner {
+            width:44px; height:44px;
+            border:4px solid #e2e8f0;
+            border-top:4px solid #D90429;
+            border-radius:50%;
+            animation:spin .8s linear infinite;
+            margin:0 auto 1rem;
+        }
+        #loading-state p { font-size:1rem; font-weight:700; }
+
+        /* QR area */
+        #qr-box {
+            display:none;
+            flex-direction:column;
+            align-items:center;
+            gap:1.5rem;
+        }
+
+        #qr-preview {
+            width:100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-radius:16px;
+            overflow:hidden;
+            background:#fff;
+        }
+        #qr-preview canvas { max-width:100%; border-radius:8px; }
+        #qr-preview img   { max-width:100%; border-radius:8px; }
+
+        #url-label {
+            font-size:.85rem;
+            color:#4338CA;
+            font-weight:700;
+            background:#EEF2FF;
+            padding:.6rem 1rem;
+            border-radius:10px;
+            word-break:break-all;
+            width:100%;
+            text-align:left;
+        }
+
+        .btn-download {
+            display:flex;
+            width:100%;
+            background:#2D6A4F;
+            color:white;
+            border:none;
+            padding:1.2rem;
+            border-radius:16px;
+            font-size:1.1rem;
+            font-weight:900;
+            cursor:pointer;
+            font-family:'Outfit';
+            text-decoration:none;
+            text-align:center;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+            transition:all .25s;
+        }
+        .btn-download:hover { background:#1B4332; transform:translateY(-2px); }
+        .btn-download svg { width:24px; height:24px; }
+
+        /* Error state */
+        #error-state {
+            display:none;
+            padding:2rem 1rem;
+        }
+        #error-state .error-icon { font-size:3rem; margin-bottom:1rem; }
+        #error-state p {
+            font-size:.95rem;
+            color:#64748b;
+            line-height:1.6;
+            font-weight:600;
+        }
+        #error-state .btn-setting {
+            display:inline-block;
+            margin-top:1.2rem;
+            background:#D90429;
+            color:white;
+            padding:.8rem 1.8rem;
+            border-radius:12px;
+            font-size:.95rem;
+            font-weight:800;
+            text-decoration:none;
+            transition:all .2s;
+        }
+
+        .tips {
+            background:#F0FFF4;
+            border:1px solid #C6F6D5;
+            border-radius:14px;
+            padding:1rem 1.2rem;
+            margin-top:1.5rem;
+            text-align:left;
+        }
+        .tips p {
+            font-size:.85rem;
+            color:#276749;
+            font-weight:600;
+            line-height:1.7;
+        }
+        .tips p+p { margin-top:.3rem; }
+
+        @keyframes spin { to { transform:rotate(360deg); } }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<a href="menu-hub.html" class="back-link">← Kembali</a>
+
+<div class="card">
+    <h1>📱 QR Code Menu</h1>
+    <p class="subtitle">Cetak & tempel di meja restoran</p>
+
+    <!-- Loading -->
+    <div id="loading-state">
+        <div class="spinner"></div>
+        <p>Membuat QR Code...</p>
+    </div>
+
+    <!-- QR berhasil -->
+    <div id="qr-box">
+        <div id="qr-preview"></div>
+        <div id="url-label">🔗 <span id="url-text"></span></div>
+        <a id="downloadBtn" class="btn-download" download="qr-menu.png">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Unduh QR Code
+        </a>
+        <div class="tips">
+            <p>✅ Pelanggan scan → pilih menu → pesan</p>
+            <p>🔒 Tidak ada akses ke kasir atau admin</p>
+            <p>📏 Cetak ukuran 8×8 cm, laminating</p>
+        </div>
+    </div>
+
+    <!-- Error: URL belum diisi -->
+    <div id="error-state">
+        <div class="error-icon">⚙️</div>
+        <p>URL menu belum diatur.<br>Silakan isi di halaman <b>Pengaturan</b> pada bagian <b>"URL Menu Digital"</b>.</p>
+        <a href="pengaturan.html" class="btn-setting">Buka Pengaturan →</a>
+    </div>
+</div>
+
+<script src="admin-app.js?v=3"></script>
+<script>
+    // URL menu pelanggan — GitHub Pages
+    const MENU_URL = 'https://papabear17.github.io/MENU-_RM.PONDOK_MARISA/web/menu.html';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+
+        // Coba ambil URL custom dari pengaturan, kalau tidak ada pakai default
+        let menuUrl = MENU_URL;
+        let merchantName = 'RM';
+        try {
+            const settings = await DB.load('pengaturan') || {};
+            menuUrl      = (settings.menuUrl || MENU_URL).trim();
+            
+            // Auto-fix jika URL terisi qrcode.html secara keliru
+            if (menuUrl.includes('qrcode.html')) {
+                menuUrl = MENU_URL;
+                settings.menuUrl = MENU_URL;
+                if (typeof DB.save === 'function') await DB.save('pengaturan', settings);
+            }
+            
+            merchantName = (settings.merchantName || 'RM').trim();
+        } catch(e) {
+            console.warn('Gagal load settings, pakai URL default:', e);
+        }
+
+    // ── Generate label singkatan dari nama merchant ──
+    const words = merchantName.split(/\s+/).filter(Boolean);
+    const label = words.map(w => w[0]).join('').substring(0, 4).toUpperCase() || 'RM';
+
+    // ── Tampilkan URL ──
+    document.getElementById('url-text').textContent = menuUrl;
+
+    // ── Generate QR ──
+    const container = document.getElementById('qr-preview');
+    new QRCode(container, {
+        text:         menuUrl,
+        width:        400,
+        height:       400,
+        colorDark:    '#000000',
+        colorLight:   '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // ── Polling sampai canvas/img siap ──
+    let tries = 0;
+    const poll = setInterval(() => {
+        tries++;
+        const canvas = container.querySelector('canvas');
+        const img    = container.querySelector('img');
+        const ready  = (canvas && canvas.width > 0) ||
+                       (img && img.src && img.src.startsWith('data:'));
+
+        if (ready || tries >= 50) {
+            clearInterval(poll);
+            document.getElementById('loading-state').style.display = 'none';
+
+            if (!ready) {
+                document.getElementById('error-state').style.display = 'block';
+                document.getElementById('error-state').querySelector('p').textContent =
+                    'Gagal membuat QR Code. Coba refresh halaman.';
+                return;
+            }
+
+            // ── Tambahkan label di tengah QR (canvas only) ──
+            if (canvas && label) {
+                const ctx  = canvas.getContext('2d');
+                const size = canvas.width;
+                const cx   = size / 2;
+                const cy   = size / 2;
+                const bw   = size * 0.30;
+                const bh   = size * 0.16;
+                const bx   = cx - bw / 2;
+                const by   = cy - bh / 2;
+                const r    = bh * 0.28;
+
+                // Kotak putih rounded
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.moveTo(bx + r, by);
+                ctx.lineTo(bx + bw - r, by);
+                ctx.quadraticCurveTo(bx + bw, by, bx + bw, by + r);
+                ctx.lineTo(bx + bw, by + bh - r);
+                ctx.quadraticCurveTo(bx + bw, by + bh, bx + bw - r, by + bh);
+                ctx.lineTo(bx + r, by + bh);
+                ctx.quadraticCurveTo(bx, by + bh, bx, by + bh - r);
+                ctx.lineTo(bx, by + r);
+                ctx.quadraticCurveTo(bx, by, bx + r, by);
+                ctx.closePath();
+                ctx.fill();
+
+                // Teks auto-fit
+                ctx.textAlign    = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle    = '#D90429';
+                let fs = bh * 0.65;
+                const maxW = bw * 0.80;
+                do {
+                    ctx.font = `900 ${fs}px Outfit, Arial, sans-serif`;
+                    fs -= 1;
+                } while (ctx.measureText(label).width > maxW && fs > 8);
+                ctx.fillText(label, cx, cy);
+            }
+
+            // ── Setup tombol download ──
+            const dlBtn = document.getElementById('downloadBtn');
+            const slug  = merchantName.toLowerCase().replace(/\s+/g, '-').substring(0, 20);
+            dlBtn.download = `qr-menu-${slug}.png`;
+            if (canvas) {
+                dlBtn.href = canvas.toDataURL('image/png');
+            } else if (img) {
+                dlBtn.href = img.src;
+            }
+
+            // Tampilkan QR box
+            document.getElementById('qr-box').style.display = 'flex';
+        }
+    }, 100);
+});
+</script>
+</body>
+</html>
