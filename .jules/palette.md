@@ -1,0 +1,3 @@
+## 2026-08-07 - Focus Visibility and Keyboard Nav on Dynamic Grids
+**Learning:** Keyboard navigation and clear focus indicator visibility are essential in fast-paced retail POS environments. Dynamically generated grids (like product menus) must explicitly define `tabindex="0"`, `role="button"`, and appropriate `onkeydown` listeners (handling both 'Enter' and ' ') to make items fully keyboard-navigable and accessible, matching physical barcode scanners or keypads.
+**Action:** When designing customized grids or cards, always ensure the container is focus-navigable, handles key events semantic to buttons, and uses Tailwind's `focus-visible:ring` rather than removing default outlines entirely.
