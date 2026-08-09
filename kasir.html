@@ -31,11 +31,11 @@
 
         /* Print Specific Styles */
         @media print {
-            .no-print, 
-            aside, 
-            #sidebar, 
-            #sidebarOverlay, 
-            nav, 
+            .no-print,
+            aside,
+            #sidebar,
+            #sidebarOverlay,
+            nav,
             header,
             .sticky,
             #cartSidebar,
@@ -148,7 +148,7 @@
         <!-- Top bar -->
         <div class="bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-8 py-4 sticky top-0 z-20 no-print">
             <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors">
+                <button onclick="toggleSidebar()" aria-label="Buka Menu Navigasi" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
@@ -168,7 +168,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <button onclick="toggleCart()" class="lg:hidden p-2.5 bg-indigo-50 text-indigo-600 rounded-xl relative flex-shrink-0">
+                <button onclick="toggleCart()" aria-label="Lihat Keranjang Belanja" class="lg:hidden p-2.5 bg-indigo-50 text-indigo-600 rounded-xl relative flex-shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
@@ -200,11 +200,11 @@
                         <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-0.5" id="cartCountTitle">0 Items</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="openDraftModal()" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 transition-colors relative" title="Daftar Bill">
+                        <button onclick="openDraftModal()" aria-label="Daftar Tagihan Bill" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 transition-colors relative" title="Daftar Bill">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             <span id="draftNotifBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[8px] font-black min-w-[16px] h-4 flex items-center justify-center rounded-full border border-white px-1 shadow-sm hidden translate-x-1 -translate-y-0.5">0</span>
                         </button>
-                        <button onclick="clearCart()" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors">
+                        <button onclick="clearCart()" aria-label="Kosongkan Keranjang" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         </button>
                     </div>
@@ -226,7 +226,7 @@
                 <div class="p-6 bg-gray-50/50 border-t border-gray-100 space-y-4">
                     <!-- Bill Tag Input -->
                     <div class="relative">
-                        <input type="text" id="billTag" placeholder="Nama Meja / Pelanggan..." 
+                        <input type="text" id="billTag" placeholder="Nama Meja / Pelanggan..."
                             class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-[11px] font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-100 shadow-sm">
                     </div>
 
@@ -253,7 +253,7 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-3 pt-2">
-                        <button onclick="simpanKeDraft()" 
+                        <button onclick="simpanKeDraft()"
                             class="bg-white border border-indigo-200 text-indigo-600 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-50 transition-all">
                             Simpan Bill
                         </button>
@@ -296,7 +296,7 @@
                     <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Daftar Tagihan (Bill)</h3>
                     <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Kelola pesanan aktif / meja</p>
                 </div>
-                <button onclick="closeDraftModal()" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors">
+                <button onclick="closeDraftModal()" aria-label="Tutup Dialog Daftar Tagihan" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -313,7 +313,7 @@
         <div class="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
             <div class="p-8 border-b border-gray-100 flex items-center justify-between">
                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Pembayaran</h3>
-                <button onclick="closeBayarModal()" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                <button onclick="closeBayarModal()" aria-label="Tutup Dialog Pembayaran" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <div class="p-8 space-y-6">
                 <div id="metodeBayarList" class="grid grid-cols-2 gap-3">
@@ -359,7 +359,7 @@
     <!-- Modal Struk -->
     <div id="modalStruk" class="fixed inset-0 bg-black/60 z-[70] hidden items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-[2rem] w-full max-w-sm sm:w-[360px] shadow-2xl flex flex-col max-h-[95vh] animate-slideUp relative overflow-hidden">
-            <button onclick="closeStruk()" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors no-print z-50">
+            <button onclick="closeStruk()" aria-label="Tutup Dialog Nota" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors no-print z-50">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             <div id="printArea" class="p-8 bg-white font-mono text-[10px] text-slate-800 flex-1 overflow-y-auto scrollbar-hide w-full" style="max-width: 100%;">
@@ -378,7 +378,7 @@
 
 
                 <div class="border-t-[1.5px] border-dashed border-slate-300 my-4"></div>
-                
+
                 <div id="sItems" class="space-y-4 mb-4 text-[10px]"></div>
 
                 <div class="border-t-[1.5px] border-dashed border-slate-300 my-4"></div>
@@ -405,7 +405,7 @@
 
                 <div class="border-t-[1.5px] border-dashed border-slate-300 my-6"></div>
                 <p id="sFooter" class="text-center text-[9px] text-slate-400 uppercase tracking-widest font-black italic leading-tight mb-4"></p>
-                
+
                 <div id="sSocial" class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-[8px] font-black text-slate-400 uppercase tracking-widest border-t border-slate-50 pt-4">
                     <div id="sInstaArea" class="hidden flex items-center gap-1">
                         <svg class="w-3 h-3 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 2a5 5 0 00-5 5v10a5 5 0 005 5h10a5 5 0 005-5V7a5 5 0 00-5-5H7zm10 4a1 1 0 110 2 1 1 0 010-2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6z"/></svg>
@@ -501,8 +501,8 @@
             setInterval(() => {
                 const now = new Date();
                 if (document.getElementById('datetimeDisplay')) {
-                    document.getElementById('datetimeDisplay').textContent = 
-                        now.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }) + 
+                    document.getElementById('datetimeDisplay').textContent =
+                        now.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }) +
                         ' • ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 }
             }, 1000);
@@ -521,7 +521,7 @@
 
             function handleNewDrafts(currentDrafts) {
                 const newOrdersCount = currentDrafts.filter(d => d.isNewOrder).length;
-                
+
                 const badge = document.getElementById('draftNotifBadge');
                 if (badge) {
                     badge.classList.toggle('hidden', newOrdersCount === 0);
@@ -555,8 +555,8 @@
             const cats = ['Semua', ...kategoriList];
             const container = document.getElementById('filterKategori');
             container.innerHTML = cats.map(k => `
-                <button onclick="filterByCat('${escapeAttr(k)}')" 
-                    class="cat-btn px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${k === 'Semua' ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white text-slate-400 border border-gray-100 hover:bg-gray-50'}" 
+                <button onclick="filterByCat('${escapeAttr(k)}')"
+                    class="cat-btn px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${k === 'Semua' ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white text-slate-400 border border-gray-100 hover:bg-gray-50'}"
                     data-cat="${escapeAttr(k)}">${escapeHtml(k)}</button>
             `).join('');
         }
@@ -580,12 +580,12 @@
 
         function renderProducts(list) {
             const grid = document.getElementById('productGrid');
-            
+
             grid.innerHTML = list.map(p => `
                 <div onclick="addToCartTrigger(${p.id})" class="group bg-white rounded-[2rem] p-4 border border-gray-100 shadow-sm hover:shadow-xl hover:border-indigo-100 transition-all cursor-pointer relative overflow-hidden flex flex-col h-full">
                     ${p.variasi && p.variasi.length > 0 ? '<span class="absolute top-4 right-4 bg-indigo-500 text-white text-[8px] font-black px-2 py-1 rounded-lg z-10 shadow-sm">VARIAN</span>' : ''}
                     <div class="aspect-square rounded-2xl bg-gray-50 mb-4 overflow-hidden relative">
-                        ${p.gambar ? `<img src="${escapeAttr(p.gambar)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">` : 
+                        ${p.gambar ? `<img src="${escapeAttr(p.gambar)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">` :
                         `<div class="w-full h-full flex items-center justify-center text-gray-200 font-black text-4xl">${escapeHtml(p.nama[0])}</div>`}
                     </div>
                     <div class="flex-1">
@@ -612,7 +612,7 @@
         function addToCartTrigger(id) {
             const p = produkList.find(x => x.id === id);
             if (!p) return;
-            
+
             if (p.variasi && p.variasi.length > 0) {
                 selectedProduct = p;
                 document.getElementById('varianNama').textContent = p.nama;
@@ -712,7 +712,7 @@
         function updateTotals(subtotal) {
             const rate = (settings.taxRate || 0) / 100;
             const diskon = parseFloat(document.getElementById('inputDiskon').value) || 0;
-            
+
             const subAfterDiskon = Math.max(0, subtotal - diskon);
             const pajak = subAfterDiskon * rate;
             const total = subAfterDiskon + pajak;
@@ -731,20 +731,20 @@
             }
         }
 
-        function clearCart() { 
-            cart = []; 
+        function clearCart() {
+            cart = [];
             currentDraftId = null;
             document.getElementById('inputDiskon').value = '';
             document.getElementById('buktiBayarArea').classList.add('hidden'); // FIX #28: hide bukti bayar
-            renderCart(); 
-            document.getElementById('billTag').value = ''; 
+            renderCart();
+            document.getElementById('billTag').value = '';
         }
 
         // Bill Management
         async function simpanKeDraft() {
             if (cart.length === 0) return;
             const tag = document.getElementById('billTag').value || 'Tanpa Nama';
-            
+
             if (currentDraftId) {
                 // Update existing draft
                 const idx = draftList.findIndex(d => d.id === currentDraftId);
@@ -756,7 +756,7 @@
                 const draft = { id: Date.now(), tag, items: [...cart], diskon: parseFloat(document.getElementById('inputDiskon').value) || 0, time: new Date().toISOString() };
                 draftList.push(draft);
             }
-            
+
             await DB.save('draft_transaksi', draftList);
             alert(currentDraftId ? 'Bill berhasil diperbarui!' : 'Bill berhasil disimpan!');
             clearCart();
@@ -803,7 +803,7 @@
                 currentDraftId = d.id;
                 document.getElementById('billTag').value = d.tag;
                 document.getElementById('inputDiskon').value = d.diskon || ''; // FIX: restore diskon
-                
+
                 // FIX #23: Restore payment method from digital menu orders
                 if (d.metodeBayar) {
                     const mappedMetode = (d.metodeBayar === 'Kasir') ? 'Tunai' : d.metodeBayar;
@@ -811,7 +811,7 @@
                         setMetode(mappedMetode);
                     }
                 }
-                
+
                 // FIX #28: Show bukti bayar if available (Transfer orders)
                 const buktiArea = document.getElementById('buktiBayarArea');
                 if (d.buktiBayar && d.metodeBayar === 'Transfer') {
@@ -820,7 +820,7 @@
                 } else {
                     buktiArea.classList.add('hidden');
                 }
-                
+
                 // Clear isNewOrder flag if exists
                 if (d.isNewOrder) {
                     d.isNewOrder = false;
@@ -849,7 +849,7 @@
             const subAfterDiskon = Math.max(0, sub - diskon);
             const total = subAfterDiskon * (1 + rate);
             currentTotalBayar = total;
-            
+
             document.getElementById('bayarTotal').textContent = formatRp(total);
             document.getElementById('inputBayar').value = '';
             document.getElementById('kembalian').textContent = 'Rp 0';
@@ -870,7 +870,7 @@
                 btn.className = `metode-btn p-4 rounded-2xl border-2 transition-all font-black text-[10px] uppercase tracking-widest flex flex-col items-center gap-2 ${isActive ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-gray-100 bg-gray-50 text-slate-400'}`;
             });
             document.getElementById('tunaiSection').classList.toggle('hidden', m !== 'Tunai');
-            
+
             const bankInfo = document.getElementById('bankInfoTransfer');
             if (m === 'Transfer' && settings.bankAccount) {
                 bankInfo.classList.remove('hidden');
@@ -896,7 +896,7 @@
             const pajak = subAfterDiskon * rate;
             const total = subAfterDiskon + pajak;
             const dibayar = currentMetode === 'Tunai' ? parseFloat(document.getElementById('inputBayar').value) || 0 : total;
-            
+
             if (currentMetode === 'Tunai' && dibayar < total) { alert('Uang tidak cukup!'); return; }
 
             const tx = {
@@ -957,7 +957,7 @@
             if (!lastTx) return;
             const btn = document.getElementById('btnCetakBluetooth');
             const originalText = btn.innerHTML;
-            
+
             try {
                 btn.disabled = true;
                 btn.innerHTML = '<span class="animate-spin">⏳</span> Mencetak...';
@@ -1021,7 +1021,7 @@
                 );
 
                 const footerSection = encoder.encode(
-                    '\n' + (settings.footer || 'TERIMA KASIH').toUpperCase() + '\n' + 
+                    '\n' + (settings.footer || 'TERIMA KASIH').toUpperCase() + '\n' +
                     (socialText ? '\n' + socialText : '') +
                     esc.feed
                 );
@@ -1079,7 +1079,7 @@
 
                 // Kirim data ke printer — chunk size 512 bytes (lebih cepat)
                 const chunkSize = 512;
-                const writeMethod = characteristic.properties.writeWithoutResponse ? 
+                const writeMethod = characteristic.properties.writeWithoutResponse ?
                     (data) => characteristic.writeValueWithoutResponse(data) :
                     (data) => characteristic.writeValue(data);
 
@@ -1109,19 +1109,19 @@
             document.getElementById('sAddress').textContent = settings.address || '';
             document.getElementById('sPhone').textContent = settings.phone || '';
             document.getElementById('sFooter').textContent = settings.footer || 'Terima Kasih Atas Kunjungan Anda';
-            
+
             // Social Media & Channels
             const instaArea = document.getElementById('sInstaArea');
             const mapsArea = document.getElementById('sMapsArea');
             const tiktokArea = document.getElementById('sTiktokArea');
             const gofoodArea = document.getElementById('sGoFoodArea');
             const grabfoodArea = document.getElementById('sGrabFoodArea');
-            
+
             if (settings.instagram) {
                 instaArea.classList.remove('hidden');
                 document.getElementById('sInsta').textContent = '@' + settings.instagram;
             } else { instaArea.classList.add('hidden'); }
-            
+
             if (settings.googleMaps) {
                 mapsArea.classList.remove('hidden');
                 document.getElementById('sMaps').textContent = settings.googleMaps;
@@ -1141,9 +1141,9 @@
                 grabfoodArea.classList.remove('hidden');
                 document.getElementById('sGrabFood').textContent = settings.grabFood;
             } else { grabfoodArea.classList.add('hidden'); }
-            
+
             document.getElementById('sTaxRateLabel').textContent = settings.taxRate || 0;
-            
+
             // Populate Header Data
             document.getElementById('sNomor').textContent = tx.nomorFaktur;
             document.getElementById('sTanggal').textContent = new Date(tx.waktu).toLocaleString('id-ID', {
@@ -1175,7 +1175,7 @@
             if (tx.diskon > 0) {
                 diskonArea.classList.remove('hidden');
                 document.getElementById('sDiskon').textContent = '-' + formatRp(tx.diskon);
-                
+
                 const rate = (settings.taxRate || 0) / 100;
                 const totalTanpaDiskon = tx.subtotal * (1 + rate);
                 origTotal.textContent = formatRp(totalTanpaDiskon);
