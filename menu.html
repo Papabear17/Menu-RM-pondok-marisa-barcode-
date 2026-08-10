@@ -70,7 +70,7 @@
         <div class="cart-handle"></div>
         <div class="cart-header">
             <h2>🛒 Keranjang Pesanan</h2>
-            <button class="cart-close-btn" onclick="closeCart()">✕</button>
+            <button class="cart-close-btn" onclick="closeCart()" aria-label="Tutup keranjang">✕</button>
         </div>
 
         <div class="cart-items" id="cart-items-list"></div>
@@ -92,16 +92,16 @@
 
         <div class="order-form">
             <h3><i class="ph ph-note-pencil"></i> Detail Pesanan</h3>
-            
+
             <div class="form-group">
-                <label>Tipe Pesanan *</label>
-                <div style="display:flex; gap:10px; margin-top:5px;">
+                <label id="order-type-label">Tipe Pesanan *</label>
+                <div role="radiogroup" aria-labelledby="order-type-label" style="display:flex; gap:10px; margin-top:5px;">
                     <label style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:12px; text-align:center; cursor:pointer; font-weight:700; transition:0.3s;" id="label-dinein">
-                        <input type="radio" name="order-type" value="Dine In" checked onchange="toggleOrderType()" style="display:none;">
+                        <input type="radio" name="order-type" value="Dine In" checked onchange="toggleOrderType()" class="sr-only">
                         🍽️ Makan di Tempat
                     </label>
                     <label style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:12px; text-align:center; cursor:pointer; font-weight:700; transition:0.3s;" id="label-takeaway">
-                        <input type="radio" name="order-type" value="Take Away" onchange="toggleOrderType()" style="display:none;">
+                        <input type="radio" name="order-type" value="Take Away" onchange="toggleOrderType()" class="sr-only">
                         🛵 Pesan Antar
                     </label>
                 </div>
@@ -111,7 +111,7 @@
                 <label for="order-name">Nama Pemesan *</label>
                 <input type="text" id="order-name" placeholder="Contoh: Budi Santoso" autocomplete="name">
             </div>
-            
+
             <div class="form-group" id="group-meja">
                 <label for="order-table">Nomor Meja *</label>
                 <input type="text" id="order-table" placeholder="Contoh: Meja 3">
@@ -126,20 +126,20 @@
                 <label for="order-note">Catatan (Opsional)</label>
                 <textarea id="order-note" placeholder="Contoh: Tidak pakai pedas, kurangi gula..."></textarea>
             </div>
-            
+
             <div class="form-group" style="margin-top: 1.5rem;">
                 <label for="order-payment">Metode Pembayaran</label>
                 <select id="order-payment" onchange="togglePaymentInfo()">
                     <option value="Kasir">Bayar Nanti di Kasir</option>
                 </select>
             </div>
-            
+
             <div id="payment-info-box" style="display:none; background:#F0FFF4; padding:15px; border-radius:14px; margin-top:10px; border: 1px solid #C6F6D5; font-size: 0.85rem; color: #276749; line-height: 1.5;">
                 <!-- Diisi oleh JS -->
             </div>
 
             <div id="payment-proof-container" style="display:none; margin-top: 15px;">
-                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">Upload Bukti Pembayaran *</label>
+                <label for="payment-proof" style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">Upload Bukti Pembayaran *</label>
                 <input type="file" id="payment-proof" accept="image/*" class="w-full p-2 border border-gray-200 rounded-xl" style="font-size: 0.85rem; background: white;">
                 <p style="font-size: 0.75rem; color: #e63946; margin-top: 5px; font-weight: 600;" id="proof-error"></p>
             </div>

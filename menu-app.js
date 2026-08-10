@@ -85,7 +85,7 @@ try {
     if (typeof firebase !== 'undefined') {
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
-        
+
         // Aktifkan Offline Persistence agar HP tetap bisa kirim pesanan meski sinyal naik-turun
         db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
 
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function getKasirData() {
         try {
             let p = [], set = {}, cat = [];
-            
+
             if (db) {
                 const produkSnap = await db.collection('PondokMarisaPOS').doc('produk').get();
                 if (produkSnap.exists) p = produkSnap.data().data || [];
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const defaultCatIcons = { "Makanan": "🍲", "Minuman": "🍹", "Cemilan": "🍟", "Paket": "🍱" };
             if (cat.length === 0) cat = ["Makanan", "Minuman", "Cemilan", "Paket", "Lainnya"];
-            
+
             return {
                 restaurantInfo: {
                     name: set.merchantName || "RM. Pondok Marisa",
@@ -250,14 +250,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             const card = document.createElement("div");
             card.className = "menu-card";
             const badge = item.recommended ? '<span class="badge-recommended">⭐ Rekomendasi</span>' : '';
-            
+
             const totalQty = cart.filter(c => c.item.id === item.id).reduce((sum, c) => sum + c.qty, 0);
             let qtyHtml = '';
             if (totalQty > 0) {
                 qtyHtml = `<div class="qty-control">
-                       <button class="qty-btn minus" onclick="changeQty(${item.id}, null, -1)">−</button>
+                       <button class="qty-btn minus" onclick="changeQty(${item.id}, null, -1)" aria-label="Kurangi jumlah ${escapeAttr(item.name)}">−</button>
                        <span class="qty-count">${totalQty}</span>
-                       <button class="qty-btn plus"  onclick="addToCart(${item.id})">+</button>
+                       <button class="qty-btn plus"  onclick="addToCart(${item.id})" aria-label="Tambah jumlah ${escapeAttr(item.name)}">+</button>
                    </div>`;
             } else {
                 qtyHtml = `<button class="btn-add" onclick="addToCart(${item.id})">+ Tambah</button>`;
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             selectedVarian = null;
             document.getElementById("varianNama").textContent = item.name;
             const varianList = document.getElementById("varianList");
-            varianList.innerHTML = item.variasi.map(v => 
+            varianList.innerHTML = item.variasi.map(v =>
                 `<button class="varian-chip" onclick="selectVarian(this, '${escapeAttr(v)}')">${escapeHtml(v)}</button>`
             ).join('');
             document.getElementById("modalVarian").style.display = 'flex';
@@ -347,7 +347,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         } else {
             idx = cart.findIndex(c => c.item.id === id && c.varian === varianNorm);
         }
-        
+
         if (idx === -1) return;
         cart[idx].qty += delta;
         if (cart[idx].qty <= 0) cart.splice(idx, 1);
@@ -395,9 +395,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="cart-item-price">${formatRp(entry.item.price)}</div>
                 </div>
                 <div class="cart-item-qty">
-                    <button class="qty-btn minus" onclick="changeQty(${entry.item.id}, '${escapeAttr(entry.varian || '')}', -1)">−</button>
+                    <button class="qty-btn minus" onclick="changeQty(${entry.item.id}, '${escapeAttr(entry.varian || '')}', -1)" aria-label="Kurangi jumlah ${escapeAttr(entry.item.name)}">−</button>
                     <span class="qty-count">${entry.qty}</span>
-                    <button class="qty-btn plus"  onclick="changeQty(${entry.item.id}, '${escapeAttr(entry.varian || '')}', 1)">+</button>
+                    <button class="qty-btn plus"  onclick="changeQty(${entry.item.id}, '${escapeAttr(entry.varian || '')}', 1)" aria-label="Tambah jumlah ${escapeAttr(entry.item.name)}">+</button>
                 </div>`;
             el.appendChild(d);
         });
@@ -516,18 +516,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("proof-error").textContent = "";
 
         if (!name)  { showToast('⚠️ Mohon isi nama Anda!', 'warning'); document.getElementById("order-name").focus(); return; }
-        
-        if (orderType === 'Dine In' && !table) { 
-            showToast('⚠️ Mohon isi nomor meja!', 'warning'); document.getElementById("order-table").focus(); return; 
+
+        if (orderType === 'Dine In' && !table) {
+            showToast('⚠️ Mohon isi nomor meja!', 'warning'); document.getElementById("order-table").focus(); return;
         }
-        if (orderType === 'Take Away' && !address) { 
-            showToast('⚠️ Mohon isi alamat pengiriman!', 'warning'); document.getElementById("order-address").focus(); return; 
+        if (orderType === 'Take Away' && !address) {
+            showToast('⚠️ Mohon isi alamat pengiriman!', 'warning'); document.getElementById("order-address").focus(); return;
         }
 
         if (payment !== 'Kasir' && (!proofInput.files || proofInput.files.length === 0)) {
             document.getElementById("proof-error").textContent = "Pilih foto bukti pembayaran terlebih dahulu!";
-            showToast('⚠️ Bukti pembayaran wajib diunggah!', 'warning'); 
-            return; 
+            showToast('⚠️ Bukti pembayaran wajib diunggah!', 'warning');
+            return;
         }
 
         const btn = document.getElementById("btn-submit-order");
@@ -640,11 +640,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             cart = [];
             renderItems(); updateCartFAB();
             ['order-name','order-table','order-address','order-note'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-            
+
             // Reset order type to Dine In
             document.querySelector('input[name="order-type"][value="Dine In"]').checked = true;
             toggleOrderType();
-            
+
             document.getElementById('payment-proof').value = '';
 
             document.getElementById('success-name').textContent     = name;
