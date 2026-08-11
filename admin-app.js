@@ -322,12 +322,12 @@ function setActiveNav(page) {
                 <!-- Keyboard Panel -->
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 280px; box-sizing: border-box;">
                     ${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => `
-                        <button class="pin-key" data-val="${num}" style="width: 72px; height: 72px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); border-radius: 50%; font-weight: 800; font-size: 1.5rem; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-sizing: border-box;">${num}</button>
+                        <button class="pin-key" data-val="${num}" aria-label="${num}" style="width: 72px; height: 72px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); border-radius: 50%; font-weight: 800; font-size: 1.5rem; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-sizing: border-box;">${num}</button>
                     `).join('')}
-                    <button class="pin-key" data-val="clear" style="width: 72px; height: 72px; background: transparent; border: none; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #f43f5e; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; box-sizing: border-box;">Reset</button>
-                    <button class="pin-key" data-val="0" style="width: 72px; height: 72px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); border-radius: 50%; font-weight: 800; font-size: 1.5rem; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-sizing: border-box;">0</button>
-                    <button class="pin-key" data-val="back" style="width: 72px; height: 72px; background: transparent; border: none; font-weight: 800; font-size: 1.25rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; box-sizing: border-box;">
-                        <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="pin-key" data-val="clear" aria-label="Reset PIN" style="width: 72px; height: 72px; background: transparent; border: none; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #f43f5e; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; box-sizing: border-box;">Reset</button>
+                    <button class="pin-key" data-val="0" aria-label="0" style="width: 72px; height: 72px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); border-radius: 50%; font-weight: 800; font-size: 1.5rem; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-sizing: border-box;">0</button>
+                    <button class="pin-key" data-val="back" aria-label="Backspace (Hapus)" style="width: 72px; height: 72px; background: transparent; border: none; font-weight: 800; font-size: 1.25rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; outline: none; box-sizing: border-box;">
+                        <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0010.828 5H19a2 2 0 012 2v10a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/>
                         </svg>
                     </button>
@@ -337,41 +337,55 @@ function setActiveNav(page) {
 
         document.body.appendChild(gate);
 
-        // Hover & Active States
+        // Hover, Active & Keyboard Focus States
         const keys = gate.querySelectorAll('.pin-key');
         keys.forEach(k => {
             const val = k.getAttribute('data-val');
-            if (val !== 'clear' && val !== 'back') {
-                k.addEventListener('mouseenter', () => {
+
+            // Helper functions to handle styling changes consistently for mouse & keyboard
+            const setKeyActive = () => {
+                if (val !== 'clear' && val !== 'back') {
                     k.style.background = 'rgba(255,255,255,0.12)';
                     k.style.borderColor = 'rgba(255,255,255,0.2)';
                     k.style.transform = 'scale(1.06)';
-                });
-                k.addEventListener('mouseleave', () => {
+                    k.style.boxShadow = '0 0 14px rgba(165,180,252,0.5)';
+                } else {
+                    k.style.transform = 'scale(1.1)';
+                    k.style.boxShadow = '0 0 14px rgba(165,180,252,0.3)';
+                    if (val === 'clear') k.style.color = '#fda4af';
+                    else k.style.color = '#ffffff';
+                }
+            };
+
+            const setKeyInactive = () => {
+                k.style.boxShadow = 'none';
+                if (val !== 'clear' && val !== 'back') {
                     k.style.background = 'rgba(255,255,255,0.05)';
                     k.style.borderColor = 'rgba(255,255,255,0.08)';
                     k.style.transform = 'scale(1)';
-                });
+                } else {
+                    k.style.transform = 'scale(1)';
+                    if (val === 'clear') k.style.color = '#f43f5e';
+                    else k.style.color = '#cbd5e1';
+                }
+            };
+
+            if (val !== 'clear' && val !== 'back') {
+                k.addEventListener('mouseenter', setKeyActive);
+                k.addEventListener('mouseleave', setKeyInactive);
                 k.addEventListener('mousedown', () => {
                     k.style.background = 'rgba(255,255,255,0.25)';
                     k.style.transform = 'scale(0.95)';
                 });
-                k.addEventListener('mouseup', () => {
-                    k.style.background = 'rgba(255,255,255,0.12)';
-                    k.style.transform = 'scale(1.06)';
-                });
+                k.addEventListener('mouseup', setKeyActive);
             } else {
-                k.addEventListener('mouseenter', () => {
-                    k.style.transform = 'scale(1.1)';
-                    if (val === 'clear') k.style.color = '#fda4af';
-                    else k.style.color = '#ffffff';
-                });
-                k.addEventListener('mouseleave', () => {
-                    k.style.transform = 'scale(1)';
-                    if (val === 'clear') k.style.color = '#f43f5e';
-                    else k.style.color = '#cbd5e1';
-                });
+                k.addEventListener('mouseenter', setKeyActive);
+                k.addEventListener('mouseleave', setKeyInactive);
             }
+
+            // Keyboard Focus Event Listeners
+            k.addEventListener('focus', setKeyActive);
+            k.addEventListener('blur', setKeyInactive);
         });
 
         let currentInput = "";
