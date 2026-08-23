@@ -94,7 +94,7 @@
         <div
             class="bg-white shadow-sm px-6 lg:px-10 py-5 flex items-center justify-between sticky top-0 z-10 border-b border-slate-100">
             <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 text-gray-600">
+                <button onclick="toggleSidebar()" aria-label="Buka Menu Navigasi" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 text-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16m-7 6h7" />
@@ -186,7 +186,7 @@
             <div class="flex items-center justify-between mb-8">
                 <h3 id="modalTitle" class="text-xl font-black text-slate-800 uppercase tracking-tight">Tambah Produk
                 </h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                <button onclick="closeModal()" aria-label="Tutup" class="text-slate-400 hover:text-slate-600 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -261,7 +261,7 @@
         <div class="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl modal-content">
             <div class="flex items-center justify-between mb-8">
                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Manajemen Kategori</h3>
-                <button onclick="closeModalKategori()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                <button onclick="closeModalKategori()" aria-label="Tutup" class="text-slate-400 hover:text-slate-600 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
