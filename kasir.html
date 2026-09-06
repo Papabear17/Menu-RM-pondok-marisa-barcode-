@@ -200,11 +200,11 @@
                         <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-0.5" id="cartCountTitle">0 Items</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="openDraftModal()" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 transition-colors relative" title="Daftar Bill">
+                        <button onclick="openDraftModal()" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 transition-colors relative" title="Daftar Tagihan (Bill)" aria-label="Daftar Tagihan (Bill)">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             <span id="draftNotifBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[8px] font-black min-w-[16px] h-4 flex items-center justify-center rounded-full border border-white px-1 shadow-sm hidden translate-x-1 -translate-y-0.5">0</span>
                         </button>
-                        <button onclick="clearCart()" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors">
+                        <button onclick="clearCart()" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors" title="Kosongkan Keranjang" aria-label="Kosongkan Keranjang">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         </button>
                     </div>
@@ -691,11 +691,11 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center bg-white rounded-xl p-1 border border-gray-100 shadow-sm">
-                            <button onclick="changeQty(${c.id}, '${escapeAttr(c.varian || '')}', -1)" class="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-rose-500 font-bold"> - </button>
+                            <button onclick="changeQty(${c.id}, '${escapeAttr(c.varian || '')}', -1)" class="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-rose-500 font-bold" aria-label="Kurangi jumlah ${escapeAttr(c.nama)}"> - </button>
                             <span class="w-8 text-center text-xs font-black text-indigo-600">${c.qty}</span>
-                            <button onclick="changeQty(${c.id}, '${escapeAttr(c.varian || '')}', 1)" class="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-indigo-600 font-bold"> + </button>
+                            <button onclick="changeQty(${c.id}, '${escapeAttr(c.varian || '')}', 1)" class="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-indigo-600 font-bold" aria-label="Tambah jumlah ${escapeAttr(c.nama)}"> + </button>
                         </div>
-                        <input type="text" placeholder="Catatan..." onchange="updateItemNote(${c.id}, '${escapeAttr(c.varian || '')}', this.value)" value="${escapeAttr(c.catatan || '')}"
+                        <input type="text" placeholder="Catatan..." aria-label="Catatan item ${escapeAttr(c.nama)}" onchange="updateItemNote(${c.id}, '${escapeAttr(c.varian || '')}', this.value)" value="${escapeAttr(c.catatan || '')}"
                             class="flex-1 bg-white/50 border border-gray-100 rounded-xl px-3 py-2 text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-100">
                     </div>
                 </div>
