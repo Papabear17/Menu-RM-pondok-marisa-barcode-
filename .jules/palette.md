@@ -1,0 +1,3 @@
+## 2025-05-18 - Icon-Only Button ARIA Labels in Static POS Pages
+**Learning:** Icon-only buttons in vanilla HTML/JS web POS applications (like sidebar toggles, cart clear, quantity increment/decrement, and modal close buttons) often lack text nodes, rendering them inaccessible to screen readers. Adding descriptive `aria-label` attributes directly in static HTML and JS template strings improves screen reader navigation without affecting UI layout or styling.
+**Action:** When working on vanilla web apps, inspect both static HTML elements and JS template string renders (`renderCart()`, `renderDraftList()`) for icon-only `<button>` tags and ensure `aria-label` attributes are included.
