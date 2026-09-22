@@ -1,0 +1,3 @@
+## 2025-05-10 - ARIA Labels and Tooltips for Icon-Only Action Buttons in Vanilla HTML Tables
+**Learning:** Icon-only buttons (such as edit, delete, close, and navigation toggles) lack accessible names for screen reader users and tooltips for sighted users. In dynamically rendered tables, combining `aria-label` and `title` attributes with safely escaped dynamic names (`escapeAttr(p.nama)`) provides clear screen reader context and desktop hover guidance without changing visual layout or adding extra DOM nodes.
+**Action:** Always include `aria-label` and `title` attributes on icon-only buttons, ensuring dynamic content inserted into attribute strings uses `escapeAttr()`.
