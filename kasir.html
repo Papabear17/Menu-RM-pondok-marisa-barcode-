@@ -148,7 +148,7 @@
         <!-- Top bar -->
         <div class="bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-8 py-4 sticky top-0 z-20 no-print">
             <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors">
+                <button onclick="toggleSidebar()" aria-label="Buka Menu Navigasi" title="Buka Menu Navigasi" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
@@ -168,7 +168,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <button onclick="toggleCart()" class="lg:hidden p-2.5 bg-indigo-50 text-indigo-600 rounded-xl relative flex-shrink-0">
+                <button onclick="toggleCart()" aria-label="Buka Keranjang Belanja" title="Buka Keranjang Belanja" class="lg:hidden p-2.5 bg-indigo-50 text-indigo-600 rounded-xl relative flex-shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
@@ -200,11 +200,11 @@
                         <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-0.5" id="cartCountTitle">0 Items</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="openDraftModal()" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 transition-colors relative" title="Daftar Bill">
+                        <button onclick="openDraftModal()" aria-label="Daftar Tagihan" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 transition-colors relative" title="Daftar Bill">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             <span id="draftNotifBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[8px] font-black min-w-[16px] h-4 flex items-center justify-center rounded-full border border-white px-1 shadow-sm hidden translate-x-1 -translate-y-0.5">0</span>
                         </button>
-                        <button onclick="clearCart()" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors">
+                        <button onclick="clearCart()" aria-label="Kosongkan Keranjang" title="Kosongkan Keranjang" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         </button>
                     </div>
@@ -296,7 +296,7 @@
                     <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Daftar Tagihan (Bill)</h3>
                     <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Kelola pesanan aktif / meja</p>
                 </div>
-                <button onclick="closeDraftModal()" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors">
+                <button onclick="closeDraftModal()" aria-label="Tutup Modal Tagihan" title="Tutup Modal Tagihan" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -313,7 +313,7 @@
         <div class="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
             <div class="p-8 border-b border-gray-100 flex items-center justify-between">
                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Pembayaran</h3>
-                <button onclick="closeBayarModal()" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                <button onclick="closeBayarModal()" aria-label="Tutup Modal Pembayaran" title="Tutup Modal Pembayaran" class="p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <div class="p-8 space-y-6">
                 <div id="metodeBayarList" class="grid grid-cols-2 gap-3">
@@ -359,7 +359,7 @@
     <!-- Modal Struk -->
     <div id="modalStruk" class="fixed inset-0 bg-black/60 z-[70] hidden items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-[2rem] w-full max-w-sm sm:w-[360px] shadow-2xl flex flex-col max-h-[95vh] animate-slideUp relative overflow-hidden">
-            <button onclick="closeStruk()" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors no-print z-50">
+            <button onclick="closeStruk()" aria-label="Tutup Struk Pembayaran" title="Tutup Struk Pembayaran" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors no-print z-50">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             <div id="printArea" class="p-8 bg-white font-mono text-[10px] text-slate-800 flex-1 overflow-y-auto scrollbar-hide w-full" style="max-width: 100%;">
