@@ -1,0 +1,3 @@
+## 2025-02-17 - Vanilla Tailwind POS Modal & Control ARIA Accessibility
+**Learning:** Static/Vanilla POS interfaces with custom modal overlays and icon-only SVG buttons frequently omit native HTML dialog semantics (`role="dialog"`, `aria-modal="true"`, `aria-labelledby`) and accessible names (`aria-label`), leaving screen readers unable to announce modal openings or button actions.
+**Action:** Always audit icon-only buttons and modal containers across static web templates and ensure `aria-label` and `role="dialog"` attributes are explicitly added to interactive controls and modal dialog wrappers.
