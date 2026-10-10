@@ -1,0 +1,3 @@
+## 2025-05-18 - POS Modal Keyboard Navigation & Icon Button Accessibility
+**Learning:** In fast-paced Point of Sale (POS) cashier applications, icon-only action buttons (such as cart actions and navigation toggles) lack accessible screen reader labels, and modal overlays force cashiers to remove their hands from hardware keyboards to click close buttons. Adding explicit `aria-label`s and a global `Escape` key listener enables screen reader navigation and fast keyboard-only workflow without layout changes.
+**Action:** Always pair modal overlay components with an `Escape` key listener and ensure every icon-only button carries a descriptive `aria-label`.
