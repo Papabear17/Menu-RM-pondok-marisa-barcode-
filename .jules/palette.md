@@ -1,0 +1,3 @@
+## 2024-10-19 - Accessibility for Icon-Only Buttons in POS Interface
+**Learning:** In static HTML POS interfaces, key action buttons (such as sidebar toggle, cart clear, draft bill management, modal close buttons, and quantity adjustment triggers) often lack descriptive text or ARIA labels, making them inaccessible to screen reader users.
+**Action:** Always inspect icon-only interactive elements in POS templates and apply descriptive, localized `aria-label` attributes (e.g. `aria-label="Kurangi jumlah"` or `aria-label="Buka menu navigasi"`) to ensure complete keyboard and screen reader accessibility without affecting visual styling.
