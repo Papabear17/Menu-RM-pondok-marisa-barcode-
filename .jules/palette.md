@@ -1,0 +1,3 @@
+## 2026-10-23 - Accessibility for Dynamic Icon-Only Table Action Buttons
+**Learning:** In static HTML applications where dynamic tables/lists render icon-only buttons via template strings (e.g., Edit, Delete), adding context-aware `aria-label` and `title` attributes using safe string escaping (e.g., `escapeHtml`) provides screen readers and keyboard users with clear element labels without altering table layout.
+**Action:** When adding accessible labels to dynamically rendered buttons in vanilla JS template literals, ensure labels include the item name and use `escapeHtml` to prevent XSS/broken markup.
