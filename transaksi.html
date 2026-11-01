@@ -98,7 +98,7 @@
     <main class="flex-1 flex flex-col overflow-hidden">
         <div class="bg-white shadow-sm px-4 lg:px-8 py-4 flex items-center justify-between sticky top-0 z-10">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-600">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-600" aria-label="Buka menu navigasi">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16m-7 6h7" />
@@ -189,12 +189,12 @@
     </main>
 
     <!-- Modal Detail -->
-    <div id="modalDetail"
+    <div id="modalDetail" role="dialog" aria-modal="true" aria-labelledby="modalDetailTitle" onclick="if(event.target === this) closeDetail()"
         class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 lg:p-8 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold text-gray-800">Detail Transaksi</h3>
-                <button onclick="closeDetail()" class="text-gray-400 hover:text-gray-600"><svg class="w-6 h-6"
+                <h3 id="modalDetailTitle" class="text-xl font-bold text-gray-800">Detail Transaksi</h3>
+                <button onclick="closeDetail()" class="text-gray-400 hover:text-gray-600" aria-label="Tutup detail transaksi"><svg class="w-6 h-6"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -269,7 +269,7 @@
             <td class="px-6 py-4 font-bold text-gray-800">${formatRp(t.total)}</td>
             <td class="px-6 py-4"><span class="px-2.5 py-1 rounded-full text-xs font-medium ${metodeBadge[t.metodeBayar] || 'bg-gray-100 text-gray-600'}">${escapeHtml(t.metodeBayar)}</span></td>
             <td class="px-6 py-4">
-              <button class="text-indigo-600 hover:text-indigo-800 text-xs font-medium underline">Lihat detail</button>
+              <button class="text-indigo-600 hover:text-indigo-800 text-xs font-medium underline" aria-label="Lihat detail transaksi ${escapeHtml(t.nomorFaktur)}">Lihat detail</button>
             </td>
           </tr>
         `;
@@ -325,6 +325,12 @@
             document.getElementById('modalDetail').classList.add('hidden');
             document.getElementById('modalDetail').classList.remove('flex');
         }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !document.getElementById('modalDetail').classList.contains('hidden')) {
+                closeDetail();
+            }
+        });
 
         let filterTimeout;
         function applyFilter() {
