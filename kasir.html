@@ -268,8 +268,11 @@
     </main>
 
     <!-- Modal Varian -->
-    <div id="modalVarian" class="fixed inset-0 bg-black/60 z-[60] hidden items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-slideUp">
+    <div id="modalVarian" role="dialog" aria-modal="true" aria-labelledby="varianNama" onclick="if (event.target === this) closeVarianModal()" class="fixed inset-0 bg-black/60 z-[60] hidden items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-slideUp relative">
+            <button onclick="closeVarianModal()" aria-label="Tutup modal varian" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-xl text-slate-400 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
             <div class="p-8 pb-4 text-center">
                 <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
@@ -634,12 +637,17 @@
             currentVarian = v;
         }
 
-        function tambahKeKeranjangFinal() {
-            if (!currentVarian) { alert('Pilih varian dulu!'); return; }
-            addToCartFinal(selectedProduct, currentVarian);
+        function closeVarianModal() {
             document.getElementById('modalVarian').classList.add('hidden');
             document.getElementById('modalVarian').classList.remove('flex');
             currentVarian = null;
+            selectedProduct = null;
+        }
+
+        function tambahKeKeranjangFinal() {
+            if (!currentVarian) { alert('Pilih varian dulu!'); return; }
+            addToCartFinal(selectedProduct, currentVarian);
+            closeVarianModal();
         }
 
         function addToCartFinal(p, varian = null) {
@@ -1195,6 +1203,19 @@
             document.getElementById('modalStruk').classList.add('hidden');
             document.getElementById('modalStruk').classList.remove('flex');
         }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const isVisible = (id) => {
+                    const el = document.getElementById(id);
+                    return el && !el.classList.contains('hidden');
+                };
+                if (isVisible('modalVarian')) { closeVarianModal(); return; }
+                if (isVisible('modalBayar')) { closeBayarModal(); return; }
+                if (isVisible('modalDraft')) { closeDraftModal(); return; }
+                if (isVisible('modalStruk')) { closeStruk(); return; }
+            }
+        });
 
         init();
     </script>
