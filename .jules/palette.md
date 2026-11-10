@@ -1,0 +1,3 @@
+## 2026-11-10 - Modal Traps and Dismissal Inconsistencies in Vanilla POS Overlays
+**Learning:** In modal dialogues built with bespoke Tailwind CSS and vanilla JavaScript overlays, secondary workflow dialogs (such as item variant selection) can easily trap users if they lack an explicit close mechanism, backdrop click handlers, and `Escape` key handlers. Adding a unified backdrop click (`if(event.target===this)`) and keyboard `Escape` handler ensures clean keyboard/screen reader navigability without intrusive layout changes.
+**Action:** Always check modal dialog components for explicit dismiss controls, backdrop click dismissal, `Escape` key event binding, and descriptive `aria-label`s on icon-only buttons.
